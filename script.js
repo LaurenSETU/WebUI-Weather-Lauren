@@ -105,6 +105,8 @@ function handleDrop(event) {
     list.insertBefore(draggedElement, droppedOn.nextSibling);
 }
 
+let ascending = true;
+
 // Function to sort the weather log entries by city name
 function sortByCity() {
     const logList = document.getElementById('logList');
@@ -113,10 +115,11 @@ function sortByCity() {
     logs.sort((a, b) => {
         const cityA = a.querySelector('span.city').textContent;
         const cityB = b.querySelector('span.city').textContent;
-        return cityA.localeCompare(cityB);
+        return ascending ? cityA.localeCompare(cityB):cityB.localeCompare(cityA);
     });
 
     logs.forEach(log => logList.appendChild(log)); // Re-append to apply the new order
+    ascending = !ascending;
 }
 
 // Function to sort the weather log entries by temperature
@@ -127,10 +130,11 @@ function sortByTemperature() {
     logs.sort((a, b) => {
         const tempA = parseFloat(a.querySelector('span.temperature').textContent.split(':')[1]);
         const tempB = parseFloat(b.querySelector('span.temperature').textContent.split(':')[1]);
-        return tempA - tempB;
+        return ascending ? tempA - tempB : tempB - tempA;
     });
 
     logs.forEach(log => logList.appendChild(log)); // Re-append to apply the new order
+    ascending = !ascending;
 }
 
 function sortByCondition() {
@@ -140,9 +144,10 @@ function sortByCondition() {
     logs.sort((a, b) => {
         const conditionA = a.querySelector('span.condition').textContent.split(':')[1].trim();
         const conditionB = b.querySelector('span.condition').textContent.split(':')[1].trim();
-        return conditionA.localeCompare(conditionB);
+        return ascending ? conditionA.localeCompare(conditionB) : conditionB.localeCompare(conditionA);
     });
 
     logs.forEach(log => logList.appendChild(log)); // Re-append to apply the new order
+    ascending = !ascending;
 }
 
